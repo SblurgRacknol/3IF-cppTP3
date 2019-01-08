@@ -62,7 +62,8 @@ public:
 
 	// Mode d'emploi :
 	// A ne pas appeler directement. 
-	// A appeller à la destruction d'un objet de type pointeur sur Trajet. 
+	// A appeler à la destruction d'un objet de type pointeur sur Trajet. 
+	
 
 	//------------------------------------------------------------------ PRIVE
 

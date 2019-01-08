@@ -44,11 +44,14 @@ public:
 
 	int getType();
 	// Mode d'emploi :
-	// A appeller quand on veut différencier un TrajetSimple d'un TrajetCompose
+	// A appeler quand on veut différencier un TrajetSimple d'un TrajetCompose
 
 	
 	//------------------------------------------------- Surcharge d'opérateurs
+	
+	friend istream & operator >> ( istream & is, TrajetCompose & t );
 
+	friend ostream & operator << ( ostream & os, const TrajetCompose & t );
 
 	//-------------------------------------------- Constructeurs - destructeur
 
@@ -62,7 +65,7 @@ public:
 	virtual ~TrajetCompose();
 
 	// Mode d'emploi :
-	// A appeller si on a un pointeur sur Trajet* ou TrajetCompose*.
+	// A appeler si on a un pointeur sur Trajet* ou TrajetCompose*.
 	// C'est le cas notamment dans la classe tabTrajets.
 
 	//------------------------------------------------------------------ PRIVE

@@ -46,7 +46,12 @@ virtual int getType();
 // Appelé dans d'autres classes pour savoir si les pointeurs sur Trajet sont 
 // des trajets simples ou composés.
 
+friend class TrajetCompose; //A MODIFIER SI NECESSAIRE
+
 //------------------------------------------------- Surcharge d'opérateurs
+
+friend istream & operator >> ( istream & is, TrajetSimple & t );
+friend ostream & operator << ( ostream & os, const TrajetSimple & t );
 
 //-------------------------------------------- Constructeurs - destructeur
 

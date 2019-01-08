@@ -53,6 +53,26 @@ int TrajetSimple::getType() {
 }
 
 //------------------------------------------------- Surcharge d'opérateurs
+const char SEP = '|';
+istream & operator >> ( istream & is, TrajetSimple & t )
+{
+	// avancée du curseur de 2
+	
+	int position = is.tellg();
+	position+=2;
+	is.seekg(position, is.beg);
+	
+	// Lecture des lignes
+	getline ( is, t.villeDepart, SEP );
+	getline ( is, t.villeArrivee, SEP );
+	getline ( is, t.moyenTransport, SEP );
+}
+
+ostream & operator << ( ostream & os, const TrajetSimple & t )
+{
+	os << "0" << SEP << t.villeDepart << SEP << t.villeArrivee << SEP;
+	os << t.moyenTransport << endl;
+}
 
 //-------------------------------------------- Constructeurs - destructeur
 

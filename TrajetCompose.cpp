@@ -49,7 +49,21 @@ int TrajetCompose::getType() {
 }
 
 //------------------------------------------------- Surcharge d'opérateurs
+const char SEP = '|';
+friend istream & operator >> ( istream & is, TrajetCompose & t )
+{
+	
 
+}
+
+friend ostream & operator << ( ostream & os, const TrajetCompose & t )
+{
+	os << "1" << SEP << tabTraj.nbAct << endl;
+	for ( int i = 0 ; i < tabTraj.nbAct ; i++ )
+	{
+		os << tabTraj[i] ;
+	}
+}
 //-------------------------------------------- Constructeurs - destructeur
 
 TrajetCompose::TrajetCompose(const char* villeD, const char* villeA, tabTrajets *tT) : Trajet(villeD, villeA)
