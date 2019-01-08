@@ -52,8 +52,18 @@ int TrajetCompose::getType() {
 const char SEP = '|';
 friend istream & operator >> ( istream & is, TrajetCompose & t )
 {
+	// Avancée du curseur de 2
+	int taille = 0;
+	int position = is.tellg ( );
+	getline ( is, taille, SEP );
+	position += 2;
+	is.seekg ( position, is.beg );
 	
-
+	// Lecture des lignes
+	for (int i = 0 ; i < taille ; i++ )
+	{
+		is >> t.tabTraj [ i ];
+	}
 }
 
 friend ostream & operator << ( ostream & os, const TrajetCompose & t )

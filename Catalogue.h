@@ -15,6 +15,7 @@ e-mail               : kupiec.ludivine@gmail.com
 
 #include "Trajet.h"
 #include "tabTrajets.h"
+#include <string.h>
 
 //------------------------------------------------------------- Constantes
 
@@ -54,6 +55,9 @@ class Catalogue {
 		void Affichage();
 		// Mode d'emploi :
 		// ...
+		
+		void Sauvegarder (string nomFichier);
+		void Charger (string nomFichier);
 
 		//------------------------------------------------- Surcharge d'opérateurs
 

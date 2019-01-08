@@ -58,9 +58,9 @@ istream & operator >> ( istream & is, TrajetSimple & t )
 {
 	// avancée du curseur de 2
 	
-	int position = is.tellg();
-	position+=2;
-	is.seekg(position, is.beg);
+	int position = is.tellg ( );
+	position += 2;
+	is.seekg ( position, is.beg );
 	
 	// Lecture des lignes
 	getline ( is, t.villeDepart, SEP );
