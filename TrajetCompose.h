@@ -2,8 +2,8 @@
  TrajetCompose  -  description
 -------------------
 début                : 29/11/2018
-copyright            : (C) 2018 par Ludivine K.
-e-mail               : kupiec.ludivine@gmail.com
+copyright            : (C) 2018 par Ludivine K. et Lucie C.
+e-mail               : kupiec.ludivine@gmail.com lucie.clemenceau@insa-lyon.fr
 *************************************************************************/
 
 //---------- Interface de la classe <TrajetCompose> (fichier TrajetCompose.h) ----------------
@@ -16,6 +16,7 @@ e-mail               : kupiec.ludivine@gmail.com
 #include "Trajet.h"
 #include "tabTrajets.h"
 #include "TrajetSimple.h"
+#include <string.h>
 
 class tabTrajets;
 

@@ -2,8 +2,8 @@
  TrajetCompose  -  description
 -------------------
 début                : 29/11/2018
-copyright            : (C) 2018 par Ludivine K.
-e-mail               : kupiec.ludivine@gmail.com
+copyright            : (C) 2018 par Ludivine K. et Lucie C.
+e-mail               : kupiec.ludivine@gmail.com lucie.clemenceau@insa-lyon.fr
 *************************************************************************/
 
 //---------- Réalisation de la classe <TrajetCompose> (fichier TrajetCompose.cpp)
@@ -52,13 +52,15 @@ int TrajetCompose::getType() {
 const char SEP = '|';
 friend istream & operator >> ( istream & is, TrajetCompose & t )
 {
-	// Avancée du curseur de 2
 	int taille = 0;
 	int position = is.tellg ( );
-	getline ( is, taille, SEP );
+	string ligne = "";
+	
+	// Incrémentation de la position de 2
 	position += 2;
 	is.seekg ( position, is.beg );
-	
+	getline ( is, ligne, SEP );
+	taille = atoi ( ligne ); // A RAJOUTER : vérification du format
 	// Lecture des lignes
 	for (int i = 0 ; i < taille ; i++ )
 	{

@@ -2,8 +2,8 @@
  Catalogue  -  description
 -------------------
 début                : 29/11/2018
-copyright            : (C) 2018 par Ludivine K.
-e-mail               : kupiec.ludivine@gmail.com
+copyright            : (C) 2018 par Ludivine K. et Lucie C.
+e-mail               : kupiec.ludivine@gmail.com lucie.clemenceau@insa-lyon.fr
 *************************************************************************/
 
 //---------- Réalisation de la classe <Catalogue> (fichier Catalogue.cpp) ------------
@@ -25,6 +25,8 @@ using namespace std;
 #include "Trajet.h"
 
 //------------------------------------------------------------- Constantes
+
+final char SEP = '|';
 
 //----------------------------------------------------------------- PUBLIC
 
@@ -60,6 +62,58 @@ void Catalogue::Affichage() {
 	tab->Affichage();
 }
 
+
+int compterTrajets (string nomFichier)
+{
+	int nbTraj = 0;
+	ifstream flux ( nomFichier, ios::in );
+	if ( flux )
+	{
+		string ligne;
+		int taille = 0;
+		
+		// Parcours du fichier en comptant les trajets
+		while ( !flux.eof() )
+		{
+			getline ( flux, ligne, SEP );
+			if ( ligne == "0" )
+			{
+				nbTraj++;
+				// Déplacement à la ligne suivante
+				getline ( flux, ligne );
+			}
+			else if ( ligne == "1" )
+			{
+				nbTraj++;
+				getline ( flux, ligne, SEP ); 
+				taille = atoi ( ligne ); // A RAJOUTER : vérification du format
+				
+				// Déplacement à la ligne suivante autant de fois qu'il y a de 
+				// trajets simples dans le trajet composé
+				for ( int i=0 ; i<=taille ; i++ ) 
+				{
+					getline ( flux, ligne );
+				}
+				// QUESTION : est-ce que le curseur est au bon endroit ? </<=  
+				taille = 0;
+			}
+			else
+			{
+				cerr << "Le fichier n'a pas le bon format." << endl;
+			}
+			
+		}
+		
+		flux.close();
+	}
+	else
+	{
+		cerr << "Impossible d'ouvrir le fichier." << endl;
+	}
+	return nbTraj;
+}
+
+
 void Catalogue::Sauvegarder (string nomFichier)
 {
 	
@@ -76,22 +130,21 @@ void Catalogue::Charger (string nomFichier)
 	while ( fichier == "" );
 	ifstream flux ( fichier, ios::in );
 	
-	final char SEP = '|';
 	
 	if ( flux )
 	{
-		tabTrajets ajouts = new tabTrajets();
-		char pos;
+		tabTrajets ajouts = new tabTrajets ( compterTrajets ( nomFichier ) );
+		string ligne;
 		while ( !flux.eof() )
 		{
-			getline ( flux, pos, SEP );
-			if ( pos == '0' )
+			getline ( flux, ligne, SEP );
+			if ( ligne == "0" )
 			{
 				TrajetSimple t;
 				flux >> t; // Est-il besoin de mettre un new ? + plusieurs instances de t si on repasse par là...
 				ajouts->Ajouter(&t);
 			}
-			else if ( pos == '1' )
+			else if ( ligne == "1" )
 			{
 				TrajetCompose t;
 				flux >> t; // Est-il besoin de mettre un new ?
@@ -121,6 +174,7 @@ void Catalogue::Charger (string nomFichier)
 	}
 		
 }
+
 
 //------------------------------------------------- Surcharge d'opérateurs
 

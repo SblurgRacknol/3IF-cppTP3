@@ -2,8 +2,8 @@
  Catalogue  -  description
 -------------------
 début                : 29/11/2018
-copyright            : (C) 2018 par Ludivine K.
-e-mail               : kupiec.ludivine@gmail.com
+copyright            : (C) 2018 par Ludivine K. et Lucie C.
+e-mail               : kupiec.ludivine@gmail.com lucie.clemenceau@insa-lyon.fr
 *************************************************************************/
 
 //---------- Interface de la classe <Catalogue> (fichier Catalogue.h) ----------------
@@ -36,54 +36,58 @@ class Catalogue {
 
 	public:
 
-		//----------------------------------------------------- Méthodes publiques
+	//----------------------------------------------------- Méthodes publiques
 
-		void rechercheVoyage(char* villeD, char* villeA);
-		// Mode d'emploi :
-		// Affiche les trajets possibles pour aller de villeD à villeA
+	void rechercheVoyage(char* villeD, char* villeA);
+	// Mode d'emploi :
+	// Affiche les trajets possibles pour aller de villeD à villeA
 
-		void Ajouter(TrajetSimple* traj);
-		// Mode d'emploi :
-		// Ajoute un trajet simple au catalogue		
+	void Ajouter(TrajetSimple* traj);
+	// Mode d'emploi :
+	// Ajoute un trajet simple au catalogue		
 
-		void Ajouter(TrajetCompose* traj);
-		// Mode d'emploi :
-		// Ajoute un trajet composé au catalogue
-		// Contrat : 
-		// On suppose le trajet composé conforme (vérifié dans le main)	
-
-		void Affichage();
-		// Mode d'emploi :
-		// ...
+	void Ajouter(TrajetCompose* traj);
+	// Mode d'emploi :
+	// Ajoute un trajet composé au catalogue
+	// Contrat : 
+	// On suppose le trajet composé conforme (vérifié dans le main)	
+	void Affichage();
+	// Mode d'emploi :
+	// ...
 		
-		void Sauvegarder (string nomFichier);
-		void Charger (string nomFichier);
+	void Sauvegarder (string nomFichier);
+	void Charger (string nomFichier);
+	/*
+     * Compte le nombre de trajets (simples et composés) dans un fichier
+     * Retourne le nombre de trajets.
+     */
+	int compterTrajets (string nomFichier);
 
-		//------------------------------------------------- Surcharge d'opérateurs
+	//------------------------------------------------- Surcharge d'opérateurs
 
-		//-------------------------------------------- Constructeurs - destructeur
+	//-------------------------------------------- Constructeurs - destructeur
 
-		Catalogue();
+	Catalogue();
 
-		// Mode d'emploi : constructeur par défaut
-		// A appeller en début de fonction
-		// tabTrajets a une taille maximale mais une cardinalité actuelle nulle
+	// Mode d'emploi : constructeur par défaut
+	// A appeler en début de fonction
+	// tabTrajets a une taille maximale mais une cardinalité actuelle nulle
 
-		virtual ~Catalogue();
+	virtual ~Catalogue();
 
-		// Mode d'emploi : destructeur
-		// Si catalogue est de type pointeur, à appeler avant la fin du bloc
-		// où catalogue a été instancié
+	// Mode d'emploi : destructeur
+	// Si catalogue est de type pointeur, à appeler avant la fin du bloc
+	// où catalogue a été instancié
 
-		//------------------------------------------------------------------ PRIVE
+	//------------------------------------------------------------------ PRIVE
 
 	protected:
 
-		//----------------------------------------------------- Méthodes protégées
+	//----------------------------------------------------- Méthodes protégées
 
-		//----------------------------------------------------- Attributs protégés
+	//----------------------------------------------------- Attributs protégés
 
-		tabTrajets *tab;
+	tabTrajets *tab;
 
 };
 

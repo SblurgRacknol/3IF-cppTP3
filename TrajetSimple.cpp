@@ -2,8 +2,8 @@
  TrajetSimple  -  description
 -------------------
 début                : 29/11/2018
-copyright            : (C) 2018 par Ludivine K.
-e-mail               : kupiec.ludivine@gmail.com
+copyright            : (C) 2018 par Ludivine K. et Lucie C.
+e-mail               : kupiec.ludivine@gmail.com lucie.clemenceau@insa-lyon.fr
 *************************************************************************/
 
 //---------- Réalisation de la classe <TrajetSimple> (fichier TrajetSimple.cpp) ------------
@@ -56,13 +56,13 @@ int TrajetSimple::getType() {
 const char SEP = '|';
 istream & operator >> ( istream & is, TrajetSimple & t )
 {
-	// avancée du curseur de 2
+	// Incrémentation de la position de 2
 	
 	int position = is.tellg ( );
 	position += 2;
 	is.seekg ( position, is.beg );
 	
-	// Lecture des lignes
+	// Lecture des informations
 	getline ( is, t.villeDepart, SEP );
 	getline ( is, t.villeArrivee, SEP );
 	getline ( is, t.moyenTransport, SEP );
