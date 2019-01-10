@@ -70,10 +70,12 @@ void Catalogue::Sauvegarder (string nomFichier)
 		cin >> fichier ;
 	}
 	while ( fichier == "" );*/
+
 	ofstream flux ( nomFichier.c_str(), ios::out | ios::trunc );
+
 	if ( flux )
 	{
-		for ( int i=0 ; i<tab->getNbAct() ; i++ )
+		for ( int i=0 ; i<tab->getNbAct(); i++ )
 		{
 			 tab->getTrajet(i)->Ecrire(flux) ; 
 		}
@@ -120,7 +122,7 @@ void Catalogue::Charger(string nomFichier)
 			{
 				cout << "Je passe ici, car ligne vaut " << ligne << " ! ";
 				cerr << "Erreur : le fichier n'a pas le bon format" << endl;
-				flux.seekg (0, flux.end + 1) ;
+				flux.seekg (0, flux.end) ;
 
 				//La condition de fin de while est remplie
 			}

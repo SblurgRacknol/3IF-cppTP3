@@ -36,10 +36,10 @@ void TrajetSimple::Affichage()
 	cout << " - en " << moyenTransport << endl;
 }
 
-
 int TrajetSimple::getType() {
 	return 0;
 }
+
 void TrajetSimple::Lire ( istream & is )
 {
 	// Incrémentation de la position de 2
@@ -49,14 +49,20 @@ void TrajetSimple::Lire ( istream & is )
 	is.seekg ( position, is.beg );
 	
 	// Lecture des informations
+
 	getline ( is, villeDepart, SEP );
 	getline ( is, villeArrivee, SEP );
 	getline ( is, moyenTransport, SEP );
+
+	Affichage();
 }
+
 void TrajetSimple::Ecrire ( ostream & os )
 {
 	os << "0" << SEP << villeDepart << SEP << villeArrivee << SEP;
 	os << moyenTransport << SEP << endl;
+
+	Affichage();
 }
 
 
