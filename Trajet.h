@@ -10,14 +10,9 @@ e-mail               : kupiec.ludivine@gmail.com lucie.clemenceau@insa-lyon.fr
 
 #if !defined (Trajet_H)
 #define Trajet_H
+#include <string>
+using namespace std;
 
-//--------------------------------------------------- Interfaces utilisées
-
-//------------------------------------------------------------- Constantes
-
-//------------------------------------------------------------------ Types
-
-//------------------------------------------------------------------------
 
 // Rôle de la classe <Trajet>
 // Classe abstraite pure et générique servant à l'implémentation de sous-classes plus détaillées.
@@ -28,7 +23,7 @@ class Trajet {
 
 	//----------------------------------------------------------------- PUBLIC
 
-public:
+	public:
 
 	//----------------------------------------------------- Méthodes publiques
 
@@ -36,53 +31,37 @@ public:
 
 	// Mode d'emploi :
 	// Ne peut être appelé directement depuis une instance de Trajet (car pas instanciable).
-	// A appeller depuis un fils de la classe. 
 
 	virtual int getType() = 0;
 
 	// Mode d'emploi :
 	// Méthode virtuelle pure forcément redéfinie dans toutes les classes héritant de Trajet. 
-	// A appeller depuis un fils de la classe.
+	// Retourne 0 si le trajet est un TrajetSimple, 1 si c'est un TrajetCompose
 
-	char* getVilleDepart() const;
+	string getVilleDepart() const;
 
-	// Mode d'emploi :
-	// A appeller depuis un fils de la classe.
-
-	char* getVilleArrivee() const;
-
-	// Mode d'emploi :
-	// A appeller depuis un fils de la classe.
+	string getVilleArrivee() const;
 
 	//------------------------------------------------- Surcharge d'opérateurs
 
+	virtual void Lire ( istream & is ) = 0;
+	virtual void Ecrire ( ostream & os ) = 0;
+
 	//-------------------------------------------- Constructeurs - destructeur
+	Trajet ( const string villeD, const string villeA );
+	// Constructeur standard
 
 	virtual ~Trajet();
 
-	// Mode d'emploi :
-	// A ne pas appeler directement. 
+	// Mode d'emploi :	
 	// A appeler à la destruction d'un objet de type pointeur sur Trajet. 
 	
 
-	//------------------------------------------------------------------ PRIVE
+	protected :
+	//----------------------------------------------------- Attributs protégés
 
-protected:
-
-	//----------------------------------------------------- Méthodes protégées
-
-
-	//--------------------------------------------------- Constructeur protégé
-
-	Trajet(const char* villeD, const char* villeA);
-
-	// Mode d'emploi (constructeur standard) :
-	// A appeler dans le cas où on connaître la ville de départ et d'arrivée. 
-
-  //----------------------------------------------------- Attributs protégés
-
-	char* villeDepart;
-	char* villeArrivee;
+	string villeDepart;
+	string villeArrivee;
 
 };
 

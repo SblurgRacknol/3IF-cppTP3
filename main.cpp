@@ -47,33 +47,32 @@ TrajetSimple* saisieTrajetSimple() {
 
 	// Chaînes de caractères
 
-	char* depart = new char[TAILLE];
+	/*char* depart = new char[TAILLE];
 	char* arrivee = new char[TAILLE];
-	char* moyDeTransp = new char[TAILLE];
+	char* moyDeTransp = new char[TAILLE];*/
+	
+	string dep;
+	string arr;
+	string moy;
 
 	cout << "- Quelle est la ville de depart ?" << endl;
-	scanf("%s", depart);
-
-	viderBuffer();
+	getline ( cin, dep );
 
 	do {
 		cout << "- Quelle est la ville d'arrivee ?" << endl;
-		scanf("%s", arrivee);
-	} while (0 == strcmp(depart, arrivee));
-
-	viderBuffer();
+		getline ( cin, arr );
+	} while (dep==arr);
 
 	cout << "- Quel est le moyen de transport associe ?" << endl;
-	scanf("%s", moyDeTransp);
+	getline ( cin, moy );
 
-	viderBuffer();
 	cout << endl;
+	
+	TrajetSimple *ts = new TrajetSimple(dep, arr, moy);
 
-	TrajetSimple *ts = new TrajetSimple(depart, arrivee, moyDeTransp);
-
-	delete[] depart;
+	/*delete[] depart;
 	delete[] arrivee;
-	delete[] moyDeTransp;
+	delete[] moyDeTransp;*/
 
 	return ts;
 }
@@ -83,18 +82,16 @@ TrajetCompose* saisieTrajetCompose() {
 	cout << "Création d'un Trajet Compose." << endl;
 
 	int nbTraj;
-	char caractere;
+	string nb;
 
 	// Saisie du nombre de trajets simples dont sera composé le trajet composé
 
 	do {
 		cout << "- Combien d'étapes intermédiaires contient votre trajet ?" << endl;
-		scanf("%c", &caractere);
-		nbTraj = caractere - 48;
-		viderBuffer();
+		getline ( cin, nb );
+		nbTraj = stoi ( nb );
 	} while (nbTraj < 0 || nbTraj > 9);
 
-	//
 
 	nbTraj++;
 

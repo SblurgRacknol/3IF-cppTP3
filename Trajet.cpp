@@ -23,7 +23,6 @@ using namespace std;
 
 #include"Trajet.h"
 
-//------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
 
@@ -36,23 +35,22 @@ void Trajet::Affichage()
 
 //--------------------------------------------------- Getteurs et Setteurs
 
-char* Trajet::getVilleDepart() const
+string Trajet::getVilleDepart() const
 // Retourne la ville de départ
 {
 	return villeDepart;
 }
 
-char* Trajet::getVilleArrivee() const
+string Trajet::getVilleArrivee() const
 // Retourne la ville d'arrivée
 {
 	return villeArrivee;
 }
 
-//------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur
 
-Trajet::Trajet(const char* villeD, const char* villeA)
+Trajet::Trajet(const string villeD, const string villeA)
 // Algorithme :
 // - Allocation de mémoire pour villeDepart et villeArrive
 // Allocation de la longueur des paramètres, +1 pour le caractère de fin \0
@@ -63,13 +61,12 @@ Trajet::Trajet(const char* villeD, const char* villeA)
 	cout << "Appel au constructeur de <Trajet>" << endl;
 #endif
 
-	villeDepart = new char[strlen(villeD) + 1]; 
-	villeArrivee = new char[strlen(villeA) + 1];
+	villeDepart = villeD; 
+	villeArrivee = villeA;
 
-	strcpy(villeDepart, villeD); 
-	strcpy(villeArrivee, villeA);
 
 } //----- Fin de Trajet
+
 
 Trajet::~Trajet()
 // Algorithme :
@@ -80,11 +77,5 @@ Trajet::~Trajet()
 	cout << "Appel au destructeur de <Trajet>" << endl;
 #endif
 
-	delete[] villeDepart;
-	delete[] villeArrivee;
-
 } //----- Fin de ~Trajet
 
-//------------------------------------------------------------------ PRIVE
-
-//----------------------------------------------------- Méthodes protégées

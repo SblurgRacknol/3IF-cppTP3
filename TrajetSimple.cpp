@@ -14,7 +14,6 @@ e-mail               : kupiec.ludivine@gmail.com lucie.clemenceau@insa-lyon.fr
 
 #define _CRT_SECURE_NO_WARNINGS
 
-#include <iostream>
 #include <cstring>
 
 using namespace std;
@@ -24,16 +23,11 @@ using namespace std;
 #include "TrajetSimple.h"
 
 //------------------------------------------------------------- Constantes
-
+const char SEP = '|';
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
 
-// type TrajetSimple::Méthode (liste des paramètres)
-// Algorithme :
-//
-// {
-// } //----- Fin de Méthode
 
 void TrajetSimple::Affichage() 
 {
@@ -42,19 +36,12 @@ void TrajetSimple::Affichage()
 	cout << " - en " << moyenTransport << endl;
 }
 
-// type TrajetSimple::Méthode(liste des paramètres)
-// Algorithme :
-//
-//{
-//} //----- Fin de Méthode
 
 int TrajetSimple::getType() {
 	return 0;
 }
 
-//------------------------------------------------- Surcharge d'opérateurs
-const char SEP = '|';
-istream & operator >> ( istream & is, TrajetSimple & t )
+void TrajetSimple::Lire ( istream & is )
 {
 	// Incrémentation de la position de 2
 	
@@ -63,20 +50,20 @@ istream & operator >> ( istream & is, TrajetSimple & t )
 	is.seekg ( position, is.beg );
 	
 	// Lecture des informations
-	getline ( is, t.villeDepart, SEP );
-	getline ( is, t.villeArrivee, SEP );
-	getline ( is, t.moyenTransport, SEP );
+	getline ( is, villeDepart, SEP );
+	getline ( is, villeArrivee, SEP );
+	getline ( is, moyenTransport, SEP );
+}
+void TrajetSimple::Ecrire ( ostream & os )
+{
+	os << "0" << SEP << villeDepart << SEP << villeArrivee << SEP;
+	os << moyenTransport << SEP << endl;
 }
 
-ostream & operator << ( ostream & os, const TrajetSimple & t )
-{
-	os << "0" << SEP << t.villeDepart << SEP << t.villeArrivee << SEP;
-	os << t.moyenTransport << endl;
-}
 
 //-------------------------------------------- Constructeurs - destructeur
 
-TrajetSimple::TrajetSimple(const char* VilleD, const char* VilleA, const char* moyTransport) : Trajet(VilleD, VilleA)
+TrajetSimple::TrajetSimple(const string VilleD, const string VilleA, const string moyTransport) : Trajet(VilleD, VilleA)
 // Algorithme :
 // - Appel au constructeur de la classe parent
 // - Allocation de mémoire pour la chaîne de caractères stockant le moyen de transport
@@ -87,26 +74,28 @@ TrajetSimple::TrajetSimple(const char* VilleD, const char* VilleA, const char* m
 	cout << "Appel au constructeur de <TrajetSimple>" << endl;
 #endif
 
-	moyenTransport = new char[strlen(moyTransport) + 1];
-	strcpy(moyenTransport, moyTransport);
+	moyenTransport = moyTransport;
 
 } //----- Fin de TrajetSimple
 
+TrajetSimple::TrajetSimple(const TrajetSimple &t) : Trajet ( t )
+{
+#ifdef MAP
+	cout << "Appel au constructeur de copie de <TrajetSimple>" << endl;
+#endif
+
+	moyenTransport = t.moyenTransport;
+
+} //----- Fin de TrajetSimple
+
+
 TrajetSimple::~TrajetSimple()
-// Algorithme :
-//
 {
 
 #ifdef MAP
 	cout << "Appel au destructeur de <TrajetSimple>" << endl;
 #endif
 
-	delete[] moyenTransport;
-
 } //----- Fin de ~TrajetSimple
 
-
-//------------------------------------------------------------------ PRIVE
-
-//----------------------------------------------------- Méthodes protégées
 

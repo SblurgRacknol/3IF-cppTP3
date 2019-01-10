@@ -15,7 +15,9 @@ e-mail               : kupiec.ludivine@gmail.com lucie.clemenceau@insa-lyon.fr
 
 #include "Trajet.h"
 #include "tabTrajets.h"
-#include <string.h>
+#include <string>
+#include <iostream>
+using namespace std;
 
 //------------------------------------------------------------- Constantes
 

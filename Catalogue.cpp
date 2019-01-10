@@ -12,7 +12,6 @@ e-mail               : kupiec.ludivine@gmail.com lucie.clemenceau@insa-lyon.fr
 
 //-------------------------------------------------------- Include système
 
-#include <iostream>
 #include <cstring>
 #include <fstream>
 
@@ -63,10 +62,10 @@ void Catalogue::Affichage() {
 }
 
 
-int compterTrajets (string nomFichier)
+int Catalogue::compterTrajets (string nomFichier)
 {
 	int nbTraj = 0;
-	ifstream flux ( nomFichier, ios::in );
+	/*ifstream flux ( nomFichier.c_str(), ios::in );
 	if ( flux )
 	{
 		string ligne;
@@ -109,14 +108,33 @@ int compterTrajets (string nomFichier)
 	else
 	{
 		cerr << "Impossible d'ouvrir le fichier." << endl;
-	}
+	}*/
 	return nbTraj;
 }
 
 
 void Catalogue::Sauvegarder (string nomFichier)
 {
+	string fichier = "";
+	do 
+	{
+		cout << "Entrer le chemin d'accès du fichier à charger." << endl;
+		cin >> fichier ;
+	}
+	while ( fichier == "" );
+	ofstream flux ( fichier.c_str(), ios::out | ios::trunc );
+	if ( flux )
+	{
+		for ( int i=0 ; i<tab->nbAct ; i++ )
+		{
+			 tab[i].Ecrire(flux) ; 
+		}
 	
+	}
+	else
+	{
+		cerr << "Erreur à l'ouverture du fichier" << endl;
+	}
 
 }
 void Catalogue::Charger (string nomFichier)
@@ -128,7 +146,7 @@ void Catalogue::Charger (string nomFichier)
 		cin >> fichier ;
 	}
 	while ( fichier == "" );
-	ifstream flux ( fichier, ios::in );
+	ifstream flux ( fichier.c_str(), ios::in );
 	
 	
 	if ( flux )

@@ -15,6 +15,9 @@ e-mail               : kupiec.ludivine@gmail.com lucie.clemenceau@insa-lyon.fr
 
 #include "Trajet.h"
 #include "TrajetSimple.h"
+#include <string>
+#include <iostream>
+using namespace std;
 
 //------------------------------------------------------------- Constantes
 
@@ -30,65 +33,43 @@ e-mail               : kupiec.ludivine@gmail.com lucie.clemenceau@insa-lyon.fr
 
 class TrajetSimple : public Trajet {
 
-//----------------------------------------------------------------- PUBLIC
+	//----------------------------------------------------------------- PUBLIC
 
-public:
+	public:
 
-//----------------------------------------------------- Méthodes publiques
+	//----------------------------------------------------- Méthodes publiques
 	
-virtual void Affichage();
-// Mode d'emploi :
-// ...
+	virtual void Affichage();
 
-virtual int getType();
+	virtual int getType();
+	// Retourne 0 si le trajet est un TrajetSimple, 1 si c'est un TrajetCompose
 
-// Mode d'emploi :
-// Appelé dans d'autres classes pour savoir si les pointeurs sur Trajet sont 
-// des trajets simples ou composés.
 
-friend class TrajetCompose; //A MODIFIER SI NECESSAIRE
+	void Lire ( istream & is );
+	void Ecrire ( ostream & os );
 
-//------------------------------------------------- Surcharge d'opérateurs
+	friend class TrajetCompose; //A MODIFIER SI NECESSAIRE
 
-friend istream & operator >> ( istream & is, TrajetSimple & t );
-friend ostream & operator << ( ostream & os, const TrajetSimple & t );
+	//-------------------------------------------- Constructeurs - destructeur
 
-//-------------------------------------------- Constructeurs - destructeur
+	TrajetSimple(const string villeD, const string villeA, const string moyenT);
+	// Constructeur standard
 
-TrajetSimple(const char* villeD, const char* villeA, const char* moyenT);
+	TrajetSimple(const TrajetSimple &t);
+	// Constructeur de copie
 
-// Mode d'emploi (constructeur standard) :
-// Appelé pour créer une instance de TrajetSimple si on connaît :
-// - Sa ville de départ
-// - Sa ville d'arrivée
-// - Son moyen de transport
+	virtual ~TrajetSimple();
+	// Destructeur
 
-// TrajetSimple(const TrajetSimple &unTrajet);
 
-// Mode d'emploi (constructeur de copie) :
-// 
-// Contrat :
-//
+	//------------------------------------------------------------------ PRIVE
+	protected:
 
-virtual ~TrajetSimple();
+	//----------------------------------------------------- Attributs protégés
 
-// Mode d'emploi :
-//
-// Contrat :
-//
-
-//------------------------------------------------------------------ PRIVE
-
-protected:
-
-//----------------------------------------------------- Méthodes protégées
-
-//----------------------------------------------------- Attributs protégés
-
-char* moyenTransport;
+	string moyenTransport;
 
 };
 
-//-------------------------------- Autres définitions dépendantes de <TrajetSimple>
 
 #endif // TrajetSimple_H
