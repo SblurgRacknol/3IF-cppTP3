@@ -133,64 +133,55 @@ using namespace std;
 	} //----- Fin de TrajetCompose
 
 tabTrajets::tabTrajets(int nbTraj) : nbMax(nbTraj + (5 - nbTraj % 5)), nbAct(0)
-
-		// Algorithme :
-		// Créé un tableau de trajets dans le tas
-
-	{
-
+{
 #ifdef MAP
 		cout << "Appel au constructeur standard de <tabTrajets>" << endl;
 #endif
 
-		tab = new Trajet*[nbMax];
+	tab = new Trajet*[nbMax];
+	// Initialisation des pointeurs à NULL 
+	for (int i = 0; i < nbMax; i++) {
+		tab[i] = NULL;
+	}
 
-		// Initialisation des pointeurs à NULL 
+} //----- Fin de tabTrajets
 
-		for (int i = 0; i < nbMax; i++) {
-			tab[i] = NULL;
-		}
+tabTrajets::tabTrajets(const tabTrajets &unTabTrajets)
 
-	} //----- Fin de TrajetCompose
+	// Algorithme :
+	// Créé un tableau de trajets dans le tas
 
-	tabTrajets::tabTrajets(const tabTrajets &unTabTrajets)
-
-		// Algorithme :
-		// Créé un tableau de trajets dans le tas
-
-	{
-
+{
 #ifdef MAP
 		cout << "Appel au constructeur de copie de <tabTrajets>" << endl;
 #endif
 
-		nbAct = unTabTrajets.getNbAct();
-		nbMax = unTabTrajets.getNbMax();
+	nbAct = unTabTrajets.getNbAct();
+	nbMax = unTabTrajets.getNbMax();
 
-		for (int i = 0; i < nbMax; i++) {
+	for (int i = 0; i < nbAct; i++) 
+	{
+		tab [ i ] = unTabTrajets.getTrajet(i);
+	}
+	for (int i = nbAct; i < nbMax; i++) 
+	{
+		tab[i] = NULL;
+	}	
+	
+} //----- Fin de tabTrajets
 
-		}
-	} //----- Fin de TrajetCompose
-
-	tabTrajets::~tabTrajets() {
-
-		// Algorithme :
-		//
-
+tabTrajets::~tabTrajets() 
+{
 #ifdef MAP
 		cout << "Appel au destructeur de <TrajetCompose>" << endl;
 #endif
 
-		for (int i = 0; i < nbMax; i++) {
-			delete tab[i];
-		}
+	for (int i = 0; i < nbMax; i++) {
+		delete tab[i];
+	}
 
-		delete[] tab;
+	delete[] tab;
 
-	} //----- Fin de ~TrajetCompose
+} //----- Fin de ~tabTrajets
 
-
-	//------------------------------------------------------------------ PRIVE
-
-	//----------------------------------------------------- Méthodes protégées
 
