@@ -85,38 +85,48 @@ void Catalogue::Sauvegarder (string nomFichier)
 	}
 
 }
-void Catalogue::Charger (string nomFichier)
+void Catalogue::Charger(string nomFichier)
 {
 	
 	ifstream flux ( nomFichier.c_str(), ios::in );
 	
 	if ( flux )
 	{
-		tabTrajets * ajouts = new  tabTrajets ( );
+		tabTrajets * ajouts = new tabTrajets ( );
 		string ligne;
 		TrajetSimple * baseSimple = new TrajetSimple ("a","b","");
-		tabTrajets  baseTab = tabTrajets ();
-		baseTab.Ajouter (baseSimple);
-		TrajetCompose * baseCompose = new TrajetCompose ( "a","b", &baseTab );
+		tabTrajets  *baseTab = new tabTrajets ();
+		baseTab->Ajouter (baseSimple);
+		TrajetCompose * baseCompose = new TrajetCompose ( "a","b", baseTab );
 		
 		while ( !flux.eof() )
 		{
+			
 			getline ( flux, ligne, SEP );
+
 			if ( ligne == "0" )
 			{
+				cout << "Je passe ici, car ligne vaut " << ligne << " ! ";
 				ajouts->Ajouter ( new TrajetSimple (*baseSimple) );
+				ajouts->getTrajet(ajouts->getNbAct() - 1)->Lire(flux);
 			}
 			else if ( ligne == "1" )
 			{
+				cout << "Je passe ici, car ligne vaut " << ligne << " ! ";
 				ajouts->Ajouter ( new TrajetCompose (*baseCompose) );
+				ajouts->getTrajet(ajouts->getNbAct() - 1)->Lire(flux);
 			}
 			else
 			{
+				cout << "Je passe ici, car ligne vaut " << ligne << " ! ";
 				cerr << "Erreur : le fichier n'a pas le bon format" << endl;
-				flux.seekg (0, flux.end ) ;
+				flux.seekg (0, flux.end + 1) ;
+
 				//La condition de fin de while est remplie
 			}
-			ajouts -> getTrajet ( ajouts->getNbAct() )-> Lire(flux);
+
+			cout << ajouts->getNbAct() << endl;
+
 			//si caractère = 0, on lit la ligne dans un trajet simple et on l'ajoute
 			//si =1 , on ajoute un traj comp
 			//sinon, message d'erreur "Erreur : le fichier n'a pas le bon format"
@@ -125,7 +135,9 @@ void Catalogue::Charger (string nomFichier)
 		{
 			tab -> Ajouter ( ajouts->getTrajet(i) );
 		}
+
 		flux.close();
+
 		delete baseCompose;
 		delete ajouts;
 	}
@@ -134,7 +146,6 @@ void Catalogue::Charger (string nomFichier)
 	{
 		cerr << "Impossible d'ouvrir le fichier." << endl;
 	}
-		
 }
 
 //-------------------------------------------- Constructeurs - destructeur
