@@ -92,10 +92,7 @@ TrajetCompose ( const TrajetCompose & t ) : Trajet ( t )
 #ifdef MAP
 	cout << "Appel au constructeur de copie de <TrajetCompose>" << endl;
 #endif
-	for ( int i=0 ; i<t.tabTraj->getNbAct( ) ; i++ )
-	{
-		tabTraj [ i ] = t.tabTraj [ i ];
-	}	
+	tabTraj = new tabTrajets (t.tabTraj);
 } //----- Fin de TrajetCompose
 
 TrajetCompose::~TrajetCompose()
