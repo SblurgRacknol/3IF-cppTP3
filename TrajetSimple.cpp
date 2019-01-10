@@ -28,33 +28,32 @@ const char SEP = '|';
 
 //----------------------------------------------------- Méthodes publiques
 
+Trajet * TrajetSimple::Copie ( ) const
+{
+    return new TrajetSimple ( * this );
+} //----- Fin de Copie
 
-void TrajetSimple::Affichage() 
+void TrajetSimple::Affichage( ) 
 {
 	cout << "Trajet simple, ";
 	Trajet::Affichage();
 	cout << " - en " << moyenTransport << endl;
 }
 
-int TrajetSimple::getType() {
+int TrajetSimple::getType( ) {
 	return 0;
 }
 
 void TrajetSimple::Lire ( istream & is )
 {
-	// Incrémentation de la position de 2
-	
-	int position = is.tellg ( );
-	position += 2;
-	is.seekg ( position, is.beg );
-	
 	// Lecture des informations
-
+	
 	getline ( is, villeDepart, SEP );
 	getline ( is, villeArrivee, SEP );
 	getline ( is, moyenTransport, SEP );
-
-	Affichage();
+	string s ;
+	getline ( is, s );
+	
 }
 
 void TrajetSimple::Ecrire ( ostream & os )
@@ -62,19 +61,13 @@ void TrajetSimple::Ecrire ( ostream & os )
 	os << "0" << SEP << villeDepart << SEP << villeArrivee << SEP;
 	os << moyenTransport << SEP << endl;
 
-	Affichage();
 }
 
 
 //-------------------------------------------- Constructeurs - destructeur
 
-TrajetSimple::TrajetSimple(const string VilleD, const string VilleA, const string moyTransport) : Trajet(VilleD, VilleA)
-// Algorithme :
-// - Appel au constructeur de la classe parent
-// - Allocation de mémoire pour la chaîne de caractères stockant le moyen de transport
-// - Copie du paramètre d'entrée dans la variable
+TrajetSimple::TrajetSimple( const string VilleD, const string VilleA, const string moyTransport ) : Trajet( VilleD, VilleA )
 {
-
 #ifdef MAP
 	cout << "Appel au constructeur de <TrajetSimple>" << endl;
 #endif

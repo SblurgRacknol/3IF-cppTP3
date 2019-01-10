@@ -38,85 +38,64 @@ class tabTrajets {
 
 	//----------------------------------------------------------------- PUBLIC
 
-public:
+	public:
 
 	//----------------------------------------------------- Méthodes publiques
-
+	
+	/*
+     * Ajoute un trajet à tabTraj	
+     */
 	void Ajouter(Trajet* traj);
-	// Mode d'emploi :
-	// Ajoute traj à son tableau de pointeur
-	// Contrat :
-	// La réallocation n'est appellée nul part ailleurs
-
-
+	
+	/*
+     * Réalloue deux fois la mémoire allouée actuellement. 
+     * Appelle correctement le destructeur. 		
+     */
 	void Reallouer();
-	// Mode d'emploi :
-	// Est appelé uniquement par Ajouter(Trajet* traj). Réalloue deux fois la mémoire
-	// allouée actuellement. Appelle correctement le destructeur. 
-
+	
+	/*
+     * Vérifie si le trajet simple passé en paramètre peut être ajouté à la fin 
+     * de l'instance actuelle
+     */	
 	bool isCoherent(TrajetSimple *ts);
-	// Mode d'emploi :
-	// Vérifie si le trajet passé en paramètre peut être ajouté à la fin de l'instance
-	// actuelle
-	// Contrat :
-	// Comme spécifié dans le main, les trajets composant un trajet composé doivent être
-	// entrés dans l'ordre
-
+	
+	/*
+     * Affiche dans la sortie standard les informations du tabTrajets
+     */
 	void Affichage();
-	// Mode d'emploi :
-	// ...
 
 
-	//---------------------------------------------------- Getteurs & Setteurs
+	//---------------------------------------------------- Getters & Setters
 
 	int getNbAct() const;
-	// Mode d'emploi :
-	// Retourn nbAct
 
 	Trajet* getTrajet(int i) const;
-	// Mode d'emploi :
-	// Retourne le pointeur sur Trajet d'indice i
 
 	int getType(int i) const;
-	// Mode d'emploi :
-	// Retourne le type de Trajet du pointeur d'indice i
 
 	int getNbMax() const;
 
-	//------------------------------------------------- Surcharge d'opérateurs
 
 	//-------------------------------------------- Constructeurs - destructeur
 
 	tabTrajets();
-
-	// Mode d'emploi : constructeur par défaut
-	// 
 
 	tabTrajets(const tabTrajets &unTabTrajets);
 
 	tabTrajets(int nbTraj);
 
 	virtual ~tabTrajets();
-
-	// Mode d'emploi :
-	//
-	// Contrat :
-	//
-
 	//------------------------------------------------------------------ PRIVE
 
-protected:
-
-	//----------------------------------------------------- Méthodes protégées
+	protected:
 
 	//----------------------------------------------------- Attributs protégés
 
 	int nbMax; // cardinalité maximum du tableau
-	int nbAct; // cardinalité actuelle du tableau (nombre d'éléments actuellement contenus)
+	int nbAct; // cardinalité actuelle du tableau 
 	Trajet **tab; // Tableau de pointeurs de Trajet
 
 };
 
-//-------------------------------- Autres définitions dépendantes de <tabTrajets>
 
 #endif // tabTrajets_H

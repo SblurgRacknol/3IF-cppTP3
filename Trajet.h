@@ -26,37 +26,43 @@ class Trajet {
 	public:
 
 	//----------------------------------------------------- Méthodes publiques
-
+	
+	/*
+     * Renvoie un pointeur vers une copie du trajet
+     */
+	virtual Trajet * Copie ( ) const = 0;
+	
+	/*
+     * Affiche dans la sortie standard les informations du trajet
+     */
 	virtual void Affichage();
 
-	// Mode d'emploi :
-	// Ne peut être appelé directement depuis une instance de Trajet (car pas instanciable).
-
+	/*
+	* Retourne 0 si le trajet est un TrajetSimple, 1 si c'est un TrajetCompose
+	*/
 	virtual int getType() = 0;
-
-	// Mode d'emploi :
-	// Méthode virtuelle pure forcément redéfinie dans toutes les classes héritant de Trajet. 
-	// Retourne 0 si le trajet est un TrajetSimple, 1 si c'est un TrajetCompose
-
-	string getVilleDepart() const;
-
-	string getVilleArrivee() const;
-
-	//------------------------------------------------- Surcharge d'opérateurs
-
-	virtual void Lire ( istream & is ) = 0;
-	virtual void Ecrire ( ostream & os ) = 0;
-
-	//-------------------------------------------- Constructeurs - destructeur
-	Trajet ( const string villeD, const string villeA );
-	// Constructeur standard
-
-	virtual ~Trajet();
-
-	// Mode d'emploi :	
-	// A appeler à la destruction d'un objet de type pointeur sur Trajet. 
 	
+	/*
+	* Modifie les informations du trajet courant par celles entrées dans le flux
+	* passé en paramètre
+	*/
+	virtual void Lire ( istream & is ) = 0;
+	
+	/*
+	* Ecrit les informations du trajet courant dans le flux passé en paramètre
+	*/
+	virtual void Ecrire ( ostream & os ) = 0;
+	
+	//--------------------------------------------------------------- Getters
+	string getVilleDepart() const;
+	string getVilleArrivee() const;
+	//-------------------------------------------- Constructeurs - destructeur
+	
+	Trajet ( const string villeD, const string villeA );
 
+	virtual ~Trajet();	
+	
+	//------------------------------------------------------------------ PRIVE
 	protected :
 	//----------------------------------------------------- Attributs protégés
 
@@ -64,7 +70,5 @@ class Trajet {
 	string villeArrivee;
 
 };
-
-//-------------------------------- Autres définitions dépendantes de <Trajet>
 
 #endif // Trajet_H

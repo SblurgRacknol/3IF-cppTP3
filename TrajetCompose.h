@@ -24,41 +24,50 @@ class tabTrajets;
 
 //------------------------------------------------------------------------
 // Rôle de la classe <TrajetCompose>
-// Implémenter un Trajet qui est composé de plusieurs Trajets, simples ou
-// eux-mêmes composés. Pour des raisons de facilité, ici, on aura que des 
-// TrajetCompose composés de TrajetSimple.
+// Implémenter un Trajet qui est composé de plusieurs trajets simples.
 //------------------------------------------------------------------------
 
-class TrajetCompose : public Trajet {
+class TrajetCompose : public Trajet 
+{
 
 	//----------------------------------------------------------------- PUBLIC
-
 	public:
 
 	//----------------------------------------------------- Méthodes publiques
-
-	virtual void Affichage();
-
-	int getType();
-	// Retourne 0 si le trajet est un TrajetSimple, 1 si c'est un TrajetCompose
 	
+	/*
+     * Retourne une copie en profondeur du trajet composé
+     */
+    Trajet * Copie ( ) const ;
+    
+    /*
+     * Affiche dans la sortie standard les informations du trajet composé
+     */
+	virtual void Affichage();
+	
+	/*
+	* Retourne 1 puisque le trajet considéré est composé
+	*/
+	int getType();
+	
+	/*
+	* Modifie les informations du trajet courant par celles entrées dans le flux
+	* passé en paramètre
+	*/
 	void Lire ( istream & is );
+	
+	/*
+	* Ecrit les informations du trajet courant dans le flux passé en paramètre
+	*/
 	void Ecrire ( ostream & os );
 	
 
 	//-------------------------------------------- Constructeurs - destructeur
 
 	TrajetCompose ( const string villeA, const string villeB, tabTrajets * tab );
-
-	// Constructeur standard
-	// Le tableau de trajets doit avoir été instancié au préalable. 
-	
 	TrajetCompose ( const TrajetCompose & t );
-	// Constructeur de copie
 
 	virtual ~TrajetCompose();
-
-	// Destructeur
 
 	//------------------------------------------------------------------ PRIVE
 

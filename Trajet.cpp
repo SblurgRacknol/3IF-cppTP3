@@ -30,19 +30,17 @@ using namespace std;
 
 void Trajet::Affichage() 
 {
-	cout << "de " << villeDepart << " à " << villeArrivee;
+	cout << "de " << villeDepart << " a " << villeArrivee;
 }
 
-//--------------------------------------------------- Getteurs et Setteurs
+//--------------------------------------------------- Getters et Setters
 
 string Trajet::getVilleDepart() const
-// Retourne la ville de départ
 {
 	return villeDepart;
 }
 
 string Trajet::getVilleArrivee() const
-// Retourne la ville d'arrivée
 {
 	return villeArrivee;
 }
@@ -51,10 +49,6 @@ string Trajet::getVilleArrivee() const
 //-------------------------------------------- Constructeurs - destructeur
 
 Trajet::Trajet(const string villeD, const string villeA)
-// Algorithme :
-// - Allocation de mémoire pour villeDepart et villeArrive
-// Allocation de la longueur des paramètres, +1 pour le caractère de fin \0
-// - Copie des arguments passés en paramètres dans les attributs de la classe
 {
 
 #ifdef MAP
@@ -69,9 +63,6 @@ Trajet::Trajet(const string villeD, const string villeA)
 
 
 Trajet::~Trajet()
-// Algorithme :
-// Destruction de villeDepart et villeArrivee.
-// Les crochets permettent au compilateur de savoir que ce sont des pointeurs.
 {
 #ifdef MAP
 	cout << "Appel au destructeur de <Trajet>" << endl;

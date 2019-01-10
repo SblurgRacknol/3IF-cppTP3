@@ -19,16 +19,12 @@ e-mail               : kupiec.ludivine@gmail.com lucie.clemenceau@insa-lyon.fr
 #include <iostream>
 using namespace std;
 
-//------------------------------------------------------------- Constantes
-
-//------------------------------------------------------------------ Types
-
-//------------------------------------------------------------------------
-
 // Rôle de la classe <Catalogue>
 // Classe générique implémentant des méthodes propres à un ensemble de Trajets
 // - Recherche de trajets
 // - Affichage
+// - Sauvegarde
+// - Chargement
 
 //------------------------------------------------------------------------
 
@@ -39,60 +35,60 @@ class Catalogue {
 	public:
 
 	//----------------------------------------------------- Méthodes publiques
-
-	void rechercheVoyage(char* villeD, char* villeA);
-	// Mode d'emploi :
-	// Affiche les trajets possibles pour aller de villeD à villeA
-
-	void Ajouter(TrajetSimple* traj);
-	// Mode d'emploi :
-	// Ajoute un trajet simple au catalogue		
-
-	void Ajouter(TrajetCompose* traj);
-	// Mode d'emploi :
-	// Ajoute un trajet composé au catalogue
-	// Contrat : 
-	// On suppose le trajet composé conforme (vérifié dans le main)	
-	void Affichage();
-	// Mode d'emploi :
-	// ...
-		
-	void Sauvegarder (string nomFichier);
-	void Charger (string nomFichier);
+	
 	/*
-     * Compte le nombre de trajets (simples et composés) dans un fichier
-     * Retourne le nombre de trajets.
+     * Affiche dans la sortie standard le résultat d'une recherche portant sur 
+     * les trajets possibles pour aller de villeD à villeA après parcours du 
+     * catalogue
      */
-	int compterTrajets (string nomFichier);
+	void rechercheVoyage(string villeD, string villeA);
+	
+	/*
+     * Ajoute un trajet simple traj au catalogue		
+     */
+	void Ajouter(TrajetSimple* traj);		
+	
+	/*
+     * Ajoute un trajet compose traj au catalogue	
+     * On suppose le trajet composé conforme au format demandé	
+     */
+	void Ajouter(TrajetCompose* traj);
+	
+	/*
+     * Affiche dans la sortie standard les informations du catalogue
+     */
+	void Affichage();
+	
+	/*
+     * Sauvegarde le catalogue dans un fichier
+     * nomFichier est le chemin d'accès au fichier de sauvegarde
+     */	
+	void Sauvegarder (string nomFichier);
+	
+	/*
+     * Ajoute au catalogue les trajets présents dans un fichier de sauvegarde 
+     * nomFichier est le chemin d'accès au fichier de sauvegarde
+     * Contrat : on considère que le fichier est conforme au format
+     */	
+	void Charger (string nomFichier);
 
-	//------------------------------------------------- Surcharge d'opérateurs
 
 	//-------------------------------------------- Constructeurs - destructeur
-
+	/*
+     * Crée un nouveau catalogue vide
+     */	
 	Catalogue();
-
-	// Mode d'emploi : constructeur par défaut
-	// A appeler en début de fonction
-	// tabTrajets a une taille maximale mais une cardinalité actuelle nulle
-
+	
 	virtual ~Catalogue();
-
-	// Mode d'emploi : destructeur
-	// Si catalogue est de type pointeur, à appeler avant la fin du bloc
-	// où catalogue a été instancié
 
 	//------------------------------------------------------------------ PRIVE
 
 	protected:
-
-	//----------------------------------------------------- Méthodes protégées
 
 	//----------------------------------------------------- Attributs protégés
 
 	tabTrajets *tab;
 
 };
-
-//-------------------------------- Autres définitions dépendantes de <Catalogue>
 
 #endif // Catalogue_H

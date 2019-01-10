@@ -25,39 +25,48 @@ const char SEP = '|';
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
+Trajet * TrajetCompose::Copie ( ) const
+{
+    return new TrajetCompose ( * this );
+}  //----- Fin de Copie
 
 void TrajetCompose::Affichage ( )
  {
-	cout << "Trajet composé de " << tabTraj->getNbAct() << " trajets, ";
-	Trajet::Affichage();
+	cout << "Trajet compose de " << tabTraj->getNbAct() << " trajets, ";
+	Trajet::Affichage( );
 	cout << ".\n";
-	tabTraj->Affichage();
+	tabTraj->Affichage( );
 	cout << endl;
 }
 
 void TrajetCompose::Lire ( istream & is )
 {
 	int taille = 0;
-	int position = is.tellg ( );
 	string ligne = "";
-	// Incrémentation de la position de 2
-	position += 2;
-	is.seekg ( position, is.beg );
 	getline ( is, ligne, SEP );
-	taille = stoi ( ligne ); // A RAJOUTER : vérification du format
+	try 
+	{
+  		taille = stoi ( ligne ); 
+	}
+	catch( std::invalid_argument& e )
+	{
+  		cout << "Erreur de saisie" << endl;
+	}
+	getline ( is, ligne );
 	
 	TrajetSimple base = TrajetSimple ("a","b","");
 	delete tabTraj;
 	tabTraj = new tabTrajets (taille);
 	
-	// Lecture des lignes
 	for (int i = 0 ; i < taille ; i++ )
 	{
 		tabTraj->Ajouter ( new TrajetSimple (base) );
+		getline ( is, ligne, SEP ); // on ne lit pas le caractère 0 
 		tabTraj->getTrajet(i)->Lire (is);
 	}
-	villeDepart = tabTraj->getTrajet ( 0 )->getVilleDepart();
-	villeArrivee = tabTraj->getTrajet ( taille-1 )->getVilleArrivee();
+	
+	villeDepart = tabTraj->getTrajet ( 0 )->getVilleDepart( );
+	villeArrivee = tabTraj->getTrajet ( taille-1 )->getVilleArrivee( );
 }
 
 void TrajetCompose::Ecrire ( ostream & os )
@@ -65,11 +74,12 @@ void TrajetCompose::Ecrire ( ostream & os )
 	os << "1" << SEP << tabTraj->getNbAct()<< SEP << endl;
 	for ( int i = 0 ; i < tabTraj->getNbAct() ; i++ )
 	{
-		tabTraj->getTrajet ( i ) ->Ecrire(os) ; //MARCHE PAS
+		tabTraj->getTrajet ( i ) ->Ecrire(os) ; 
 	}
 }
 
-int TrajetCompose::getType() {
+int TrajetCompose::getType() 
+{
 	return 1;
 }
 
@@ -91,7 +101,12 @@ TrajetCompose::TrajetCompose ( const TrajetCompose & t ) : Trajet ( t )
 #ifdef MAP
 	cout << "Appel au constructeur de copie de <TrajetCompose>" << endl;
 #endif
-	tabTraj = new tabTrajets (*t.tabTraj); 
+	tabTraj = new tabTrajets (0);
+	for ( int i=0 ; i<t.tabTraj->getNbAct() ; i++ )
+	{
+		tabTraj->Ajouter( t.tabTraj->getTrajet (i)-> Copie() );
+	
+	}
 } //----- Fin de TrajetCompose
 
 TrajetCompose::~TrajetCompose()

@@ -39,26 +39,41 @@ class TrajetSimple : public Trajet {
 
 	//----------------------------------------------------- Méthodes publiques
 	
+	/*
+     * Retourne une copie en profondeur du trajet simple
+     */
+    Trajet * Copie ( ) const;
+
+	/*
+     * Affiche dans la sortie standard les informations du trajet simple
+     */
 	virtual void Affichage();
 
+	/*
+	* Retourne 0 puisque le trajet considéré est simple
+	*/
 	virtual int getType();
-	// Retourne 0 si le trajet est un TrajetSimple, 1 si c'est un TrajetCompose
 
+	/*
+	* Modifie les informations du trajet courant par celles entrées dans le flux
+	* passé en paramètre
+	*/
 	void Lire ( istream & is );
+	
+	/*
+	* Ecrit les informations du trajet courant dans le flux passé en paramètre
+	*/
 	void Ecrire ( ostream & os );
 
-	friend class TrajetCompose; //A MODIFIER SI NECESSAIRE
+	//friend class TrajetCompose;
 
 	//-------------------------------------------- Constructeurs - destructeur
 
-	TrajetSimple(const string villeD, const string villeA, const string moyenT);
-	// Constructeur standard
+	TrajetSimple( const string villeD, const string villeA, const string moyenT );
 
-	TrajetSimple(const TrajetSimple &t);
-	// Constructeur de copie
+	TrajetSimple( const TrajetSimple &t );
 
-	virtual ~TrajetSimple();
-	// Destructeur
+	virtual ~TrajetSimple( );
 
 
 	//------------------------------------------------------------------ PRIVE
@@ -69,6 +84,5 @@ class TrajetSimple : public Trajet {
 	string moyenTransport;
 
 };
-
 
 #endif // TrajetSimple_H

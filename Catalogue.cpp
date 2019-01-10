@@ -31,14 +31,18 @@ const char SEP = '|';
 
 //----------------------------------------------------- Méthodes publiques
 
-void Catalogue::rechercheVoyage(char* villeD, char* villeA) {
+void Catalogue::rechercheVoyage( string villeD, string villeA ) 
+{
 	
 	int cpt = 0;
 
-	for (int i = 0; i < tab->getNbAct(); i++) {
-		if ( villeD == tab->getTrajet(i)->getVilleDepart() ) {
-			if ( villeA == tab->getTrajet(i)->getVilleArrivee() ) {
-				tab->getTrajet(i)->Affichage();
+	for (int i = 0; i < tab->getNbAct( ); i++) 
+	{
+		if ( villeD == tab->getTrajet(i)->getVilleDepart( ) ) 
+		{
+			if ( villeA == tab->getTrajet(i)->getVilleArrivee( ) ) 
+			{
+				tab->getTrajet(i)->Affichage( );
 				cpt++;
 			}
 		}
@@ -47,31 +51,26 @@ void Catalogue::rechercheVoyage(char* villeD, char* villeA) {
 	cout << cpt << " résultats de recherche." << endl;
 }
 
-void Catalogue::Ajouter(TrajetCompose* traj) {
+void Catalogue::Ajouter(TrajetCompose* traj) 
+{
 	tab->Ajouter(traj);
 }
 
-void Catalogue::Ajouter(TrajetSimple* traj) {
+void Catalogue::Ajouter(TrajetSimple* traj) 
+{
 	tab->Ajouter(traj);
 }
 
 
-void Catalogue::Affichage() {
+void Catalogue::Affichage( ) 
+{
 	cout << "Affichage du catalogue." << endl;
 	tab->Affichage();
 }
 
 void Catalogue::Sauvegarder (string nomFichier)
 {
-	/*string fichier = "";
-	do 
-	{
-		cout << "Entrer le chemin d'accès du fichier à charger." << endl;
-		cin >> fichier ;
-	}
-	while ( fichier == "" );*/
-
-	ofstream flux ( nomFichier.c_str(), ios::out | ios::trunc );
+		ofstream flux ( nomFichier.c_str(), ios::out | ios::trunc );
 
 	if ( flux )
 	{
@@ -87,6 +86,7 @@ void Catalogue::Sauvegarder (string nomFichier)
 	}
 
 }
+
 void Catalogue::Charger(string nomFichier)
 {
 	
@@ -94,54 +94,34 @@ void Catalogue::Charger(string nomFichier)
 	
 	if ( flux )
 	{
-		tabTrajets * ajouts = new tabTrajets ( );
 		string ligne;
 		TrajetSimple * baseSimple = new TrajetSimple ("a","b","");
-		tabTrajets  *baseTab = new tabTrajets ();
+		tabTrajets * baseTab = new tabTrajets ();
 		baseTab->Ajouter (baseSimple);
 		TrajetCompose * baseCompose = new TrajetCompose ( "a","b", baseTab );
 		
 		while ( !flux.eof() )
 		{
-			
 			getline ( flux, ligne, SEP );
 
 			if ( ligne == "0" )
 			{
-				cout << "Je passe ici, car ligne vaut " << ligne << " ! ";
-				ajouts->Ajouter ( new TrajetSimple (*baseSimple) );
-				ajouts->getTrajet(ajouts->getNbAct() - 1)->Lire(flux);
+				tab->Ajouter ( new TrajetSimple (*baseSimple) );
+				tab->getTrajet( tab->getNbAct()-1 )->Lire(flux);
 			}
 			else if ( ligne == "1" )
 			{
-				cout << "Je passe ici, car ligne vaut " << ligne << " ! ";
-				ajouts->Ajouter ( new TrajetCompose (*baseCompose) );
-				ajouts->getTrajet(ajouts->getNbAct() - 1)->Lire(flux);
-			}
-			else
-			{
-				cout << "Je passe ici, car ligne vaut " << ligne << " ! ";
-				cerr << "Erreur : le fichier n'a pas le bon format" << endl;
-				flux.seekg (0, flux.end) ;
-
-				//La condition de fin de while est remplie
+				tab->Ajouter ( new TrajetCompose (*baseCompose) );
+				tab->getTrajet(tab->getNbAct() - 1)->Lire(flux);
 			}
 
-			cout << ajouts->getNbAct() << endl;
-
-			//si caractère = 0, on lit la ligne dans un trajet simple et on l'ajoute
-			//si =1 , on ajoute un traj comp
-			//sinon, message d'erreur "Erreur : le fichier n'a pas le bon format"
+			//si la ligne commence par 0, on ajoute un trajet simple.
+			//sinon, si la ligne commence par 1, on ajoute un trajet composé
+			//on considère que le fichier a forcément le bon format
 		}
-		for (int i=0 ; i<ajouts->getNbAct() ; i++ )
-		{
-			tab -> Ajouter ( ajouts->getTrajet(i) );
-		}
-
 		flux.close();
 
 		delete baseCompose;
-		delete ajouts;
 	}
 	
 	else
@@ -152,10 +132,8 @@ void Catalogue::Charger(string nomFichier)
 
 //-------------------------------------------- Constructeurs - destructeur
 
-Catalogue::Catalogue() {
-	// Algorithme :
-	//
-
+Catalogue::Catalogue() 
+{
 #ifdef MAP
 	cout << "Appel au constructeur de <Catalogue>" << endl;
 #endif
@@ -165,10 +143,8 @@ Catalogue::Catalogue() {
 } //----- Fin de Catalogue
 
 
-Catalogue::~Catalogue() {
-	// Algorithme :
-	//
-
+Catalogue::~Catalogue() 
+{
 #ifdef MAP
 	cout << "Appel au destructeur de <Catalogue>" << endl;
 #endif
