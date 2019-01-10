@@ -144,28 +144,28 @@ void Catalogue::Charger (string nomFichier)
 	
 	if ( flux )
 	{
-		tabTrajets * ajouts = new tabTrajets ( );
+		tabTrajets * ajouts = new  tabTrajets ( );
 		string ligne;
 		TrajetSimple * baseSimple = new TrajetSimple ("a","b","");
-		tabTrajets *  baseTab = new tabTrajets ();
-		baseTab->Ajouter (baseSimple);
-		TrajetCompose * baseCompose = new TrajetCompose ( "a","b", baseTab );
+		tabTrajets  baseTab = tabTrajets ();
+		baseTab.Ajouter (baseSimple);
+		TrajetCompose * baseCompose = new TrajetCompose ( "a","b", &baseTab );//ICI
 		
 		while ( !flux.eof() )
 		{
 			getline ( flux, ligne, SEP );
 			if ( ligne == "0" )
 			{
-				ajouts->Ajouter ( new TrajetSimple (baseSimple) );
+				ajouts->Ajouter ( new TrajetSimple (*baseSimple) );
 			}
 			else if ( ligne == "1" )
 			{
-				ajouts->Ajouter ( new TrajetCompose (baseCompose) );
+				ajouts->Ajouter ( new TrajetCompose (*baseCompose) );
 			}
 			else
 			{
 				cerr << "Erreur : le fichier n'a pas le bon format" << endl;
-				flux.seekg (0, ios::end+1 ) ; 
+				flux.seekg (0, flux.end ) ; //ICI
 				//La condition de fin de while est remplie
 			}
 			ajouts -> getTrajet ( ajouts->getNbAct() )-> Lire(flux);
@@ -173,9 +173,9 @@ void Catalogue::Charger (string nomFichier)
 			//si =1 , on ajoute un traj comp
 			//sinon, message d'erreur "Erreur : le fichier n'a pas le bon format"
 		}
-		for (int i=0 ; i<ajouts.nbAct ; i++ )
+		for (int i=0 ; i<ajouts->getNbAct() ; i++ )
 		{
-			tab -> Ajouter ( ajouts[i] );
+			tab -> Ajouter ( ajouts->getTrajet(i) );
 		}
 		flux.close();
 		delete baseCompose;
