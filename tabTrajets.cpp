@@ -132,25 +132,8 @@ using namespace std;
 
 	} //----- Fin de TrajetCompose
 
-tabTrajets::tabTrajets(int nbTraj) : nbMax(nbTraj + (5 - nbTraj % 5)), nbAct(0)
-{
-#ifdef MAP
-		cout << "Appel au constructeur standard de <tabTrajets>" << endl;
-#endif
-
-	tab = new Trajet*[nbMax];
-	// Initialisation des pointeurs à NULL 
-	for (int i = 0; i < nbMax; i++) {
-		tab[i] = NULL;
-	}
-
-} //----- Fin de tabTrajets
 
 tabTrajets::tabTrajets(const tabTrajets &unTabTrajets)
-
-	// Algorithme :
-	// Créé un tableau de trajets dans le tas
-
 {
 #ifdef MAP
 		cout << "Appel au constructeur de copie de <tabTrajets>" << endl;
@@ -168,6 +151,20 @@ tabTrajets::tabTrajets(const tabTrajets &unTabTrajets)
 		tab[i] = NULL;
 	}	
 	
+} //----- Fin de tabTrajets
+
+tabTrajets::tabTrajets(int nbTraj) : nbMax(nbTraj + (5 - nbTraj % 5)), nbAct(0)
+{
+#ifdef MAP
+		cout << "Appel au constructeur standard de <tabTrajets>" << endl;
+#endif
+
+	tab = new Trajet*[nbMax];
+	// Initialisation des pointeurs à NULL 
+	for (int i = 0; i < nbMax; i++) {
+		tab[i] = NULL;
+	}
+
 } //----- Fin de tabTrajets
 
 tabTrajets::~tabTrajets() 

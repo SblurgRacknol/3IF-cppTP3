@@ -46,7 +46,7 @@ void TrajetCompose::Lire ( istream & is )
 	getline ( is, ligne, SEP );
 	taille = stoi ( ligne ); // A RAJOUTER : vérification du format
 	
-	TrajetSimple base = new TrajetSimple ("","","");
+	TrajetSimple base = TrajetSimple ("a","b","");
 	delete tabTraj;
 	tabTraj = new tabTrajets (taille);
 	
@@ -54,11 +54,10 @@ void TrajetCompose::Lire ( istream & is )
 	for (int i = 0 ; i < taille ; i++ )
 	{
 		tabTraj->Ajouter ( new TrajetSimple (base) );
-		tabTraj->getTrajet(i)->Lire (flux);
+		tabTraj->getTrajet(i)->Lire (is);
 	}
-	villeDepart = tabTraj->getTrajet ( 0 )->getVilleDepart(is);
-	villeArrivee = tabTraj->getTrajet ( taille-1 )->getVilleArrivee(is);
-	delete base;
+	villeDepart = tabTraj->getTrajet ( 0 )->getVilleDepart();
+	villeArrivee = tabTraj->getTrajet ( taille-1 )->getVilleArrivee();
 }
 
 void TrajetCompose::Ecrire ( ostream & os )
@@ -87,12 +86,12 @@ TrajetCompose::TrajetCompose(const string villeD, const string villeA, tabTrajet
 
 } //----- Fin de TrajetCompose
 
-TrajetCompose ( const TrajetCompose & t ) : Trajet ( t )
+TrajetCompose::TrajetCompose ( const TrajetCompose & t ) : Trajet ( t )
 {
 #ifdef MAP
 	cout << "Appel au constructeur de copie de <TrajetCompose>" << endl;
 #endif
-	tabTraj = new tabTrajets (t.tabTraj);
+	tabTraj = new tabTrajets (*t.tabTraj); 
 } //----- Fin de TrajetCompose
 
 TrajetCompose::~TrajetCompose()

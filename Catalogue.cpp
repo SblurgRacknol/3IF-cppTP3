@@ -139,33 +139,28 @@ void Catalogue::Sauvegarder (string nomFichier)
 }
 void Catalogue::Charger (string nomFichier)
 {
-	/*string fichier = "";
-	do 
-	{
-		cout << "Entrer le chemin d'accès du fichier à charger." << endl;
-		cin >> fichier ;
-	}
-	while ( fichier == "" );*/
-	ifstream flux ( nomFichier.c_str(), ios::in );
 	
+	ifstream flux ( nomFichier.c_str(), ios::in );
 	
 	if ( flux )
 	{
-		tabTrajets ajouts = new tabTrajets ( compterTrajets ( nomFichier ) );
+		tabTrajets * ajouts = new tabTrajets ( );
 		string ligne;
+		TrajetSimple * baseSimple = new TrajetSimple ("a","b","");
+		tabTrajets *  baseTab = new tabTrajets ();
+		baseTab->Ajouter (baseSimple);
+		TrajetCompose * baseCompose = new TrajetCompose ( "a","b", baseTab );
+		
 		while ( !flux.eof() )
 		{
 			getline ( flux, ligne, SEP );
 			if ( ligne == "0" )
 			{
-				tab->getTrajet(i)->Lire(flux) ; // Est-il besoin de mettre un new ? + plusieurs instances de t si on repasse par là...
-				ajouts->Ajouter(&t);
+				ajouts->Ajouter ( new TrajetSimple (baseSimple) );
 			}
 			else if ( ligne == "1" )
 			{
-				TrajetCompose t;
-				flux >> t; // Est-il besoin de mettre un new ?
-				ajouts->Ajouter(&t);
+				ajouts->Ajouter ( new TrajetCompose (baseCompose) );
 			}
 			else
 			{
@@ -173,6 +168,7 @@ void Catalogue::Charger (string nomFichier)
 				flux.seekg (0, ios::end+1 ) ; 
 				//La condition de fin de while est remplie
 			}
+			ajouts -> getTrajet ( ajouts->getNbAct() )-> Lire(flux);
 			//si caractère = 0, on lit la ligne dans un trajet simple et on l'ajoute
 			//si =1 , on ajoute un traj comp
 			//sinon, message d'erreur "Erreur : le fichier n'a pas le bon format"
@@ -181,8 +177,9 @@ void Catalogue::Charger (string nomFichier)
 		{
 			tab -> Ajouter ( ajouts[i] );
 		}
-		ajouts.delete();
 		flux.close();
+		delete baseCompose;
+		delete ajouts;
 	}
 	
 	else
