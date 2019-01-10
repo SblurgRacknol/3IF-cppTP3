@@ -40,7 +40,6 @@ void TrajetSimple::Affichage()
 int TrajetSimple::getType() {
 	return 0;
 }
-
 void TrajetSimple::Lire ( istream & is )
 {
 	// Incrémentation de la position de 2

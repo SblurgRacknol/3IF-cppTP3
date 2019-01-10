@@ -115,14 +115,14 @@ int Catalogue::compterTrajets (string nomFichier)
 
 void Catalogue::Sauvegarder (string nomFichier)
 {
-	string fichier = "";
+	/*string fichier = "";
 	do 
 	{
 		cout << "Entrer le chemin d'accès du fichier à charger." << endl;
 		cin >> fichier ;
 	}
-	while ( fichier == "" );
-	ofstream flux ( fichier.c_str(), ios::out | ios::trunc );
+	while ( fichier == "" );*/
+	ofstream flux ( nomFichier.c_str(), ios::out | ios::trunc );
 	if ( flux )
 	{
 		for ( int i=0 ; i<tab->getNbAct() ; i++ )
@@ -145,8 +145,8 @@ void Catalogue::Charger (string nomFichier)
 		cout << "Entrer le chemin d'accès du fichier à charger." << endl;
 		cin >> fichier ;
 	}
-	while ( fichier == "" );
-	ifstream flux ( fichier.c_str(), ios::in );
+	while ( fichier == "" );*/
+	ifstream flux ( nomFichier.c_str(), ios::in );
 	
 	
 	if ( flux )
@@ -158,8 +158,7 @@ void Catalogue::Charger (string nomFichier)
 			getline ( flux, ligne, SEP );
 			if ( ligne == "0" )
 			{
-				TrajetSimple t;
-				flux >> t; // Est-il besoin de mettre un new ? + plusieurs instances de t si on repasse par là...
+				tab->getTrajet(i)->Lire(flux) ; // Est-il besoin de mettre un new ? + plusieurs instances de t si on repasse par là...
 				ajouts->Ajouter(&t);
 			}
 			else if ( ligne == "1" )
@@ -189,7 +188,7 @@ void Catalogue::Charger (string nomFichier)
 	else
 	{
 		cerr << "Impossible d'ouvrir le fichier." << endl;
-	}*/
+	}
 		
 }
 

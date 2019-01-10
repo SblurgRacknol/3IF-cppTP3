@@ -10,11 +10,6 @@ e-mail               : kupiec.ludivine@gmail.com lucie.clemenceau@insa-lyon.fr
 
 //---------------------------------------------------------------- INCLUDE
 
-//-------------------------------------------------------- Include système
-
-#include <iostream>
-
-using namespace std;
 
 //------------------------------------------------------ Include personnel
 
@@ -23,15 +18,15 @@ using namespace std;
 #include "TrajetSimple.h"
 #include "tabTrajets.h"
 
-//------------------------------------------------------------- Constantes
+using namespace std;
 
+//------------------------------------------------------------- Constantes
+const char SEP = '|';
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
 
-void TrajetCompose::Affichage()
-// Algorithme :
-// - Affiche le nombre de 
+void TrajetCompose::Affichage ( )
  {
 	cout << "Trajet composé de " << tabTraj->getNbAct() << " trajets, ";
 	Trajet::Affichage();
@@ -39,50 +34,51 @@ void TrajetCompose::Affichage()
 	tabTraj->Affichage();
 	cout << endl;
 }
-//
-//bool TrajetCompose::isValid() {
-//	return tabTraj.isCoherent();
-//}
+
+void TrajetCompose::Lire ( istream & is )
+{
+	int taille = 0;
+	int position = is.tellg ( );
+	string ligne = "";
+	// Incrémentation de la position de 2
+	position += 2;
+	is.seekg ( position, is.beg );
+	getline ( is, ligne, SEP );
+	taille = stoi ( ligne ); // A RAJOUTER : vérification du format
+	
+	TrajetSimple base = new TrajetSimple ("","","");
+	delete tabTraj;
+	tabTraj = new tabTrajets (taille);
+	
+	// Lecture des lignes
+	for (int i = 0 ; i < taille ; i++ )
+	{
+		tabTraj->Ajouter ( new TrajetSimple (base) );
+		tabTraj->getTrajet(i)->Lire (flux);
+	}
+	villeDepart = tabTraj->getTrajet ( 0 )->getVilleDepart(is);
+	villeArrivee = tabTraj->getTrajet ( taille-1 )->getVilleArrivee(is);
+	delete base;
+}
+
+void TrajetCompose::Ecrire ( ostream & os )
+{
+	os << "1" << SEP << tabTraj->getNbAct()<< SEP << endl;
+	for ( int i = 0 ; i < tabTraj->getNbAct() ; i++ )
+	{
+		tabTraj->getTrajet ( i ) ->Ecrire(os) ; //MARCHE PAS
+	}
+}
 
 int TrajetCompose::getType() {
 	return 1;
 }
 
-//------------------------------------------------- Surcharge d'opérateurs
-const char SEP = '|';
-friend istream & operator >> ( istream & is, TrajetCompose & t )
-{
-	int taille = 0;
-	int position = is.tellg ( );
-	string ligne = "";
-	
-	// Incrémentation de la position de 2
-	position += 2;
-	is.seekg ( position, is.beg );
-	getline ( is, ligne, SEP );
-	taille = atoi ( ligne ); // A RAJOUTER : vérification du format
-	// Lecture des lignes
-	for (int i = 0 ; i < taille ; i++ )
-	{
-		is >> t.tabTraj [ i ];
-	}
-}
 
-friend ostream & operator << ( ostream & os, const TrajetCompose & t )
-{
-	os << "1" << SEP << tabTraj.nbAct << endl;
-	for ( int i = 0 ; i < tabTraj.nbAct ; i++ )
-	{
-		os << tabTraj[i] ;
-	}
-}
 //-------------------------------------------- Constructeurs - destructeur
 
-TrajetCompose::TrajetCompose(const char* villeD, const char* villeA, tabTrajets *tT) : Trajet(villeD, villeA)
-// Algorithme :
-//
+TrajetCompose::TrajetCompose(const string villeD, const string villeA, tabTrajets *tT) : Trajet(villeD, villeA)
 {
-
 #ifdef MAP
 	cout << "Appel au constructeur de <TrajetCompose>" << endl;
 #endif
@@ -91,9 +87,18 @@ TrajetCompose::TrajetCompose(const char* villeD, const char* villeA, tabTrajets 
 
 } //----- Fin de TrajetCompose
 
+TrajetCompose ( const TrajetCompose & t ) : Trajet ( t )
+{
+#ifdef MAP
+	cout << "Appel au constructeur de copie de <TrajetCompose>" << endl;
+#endif
+	for ( int i=0 ; i<t.tabTraj->getNbAct( ) ; i++ )
+	{
+		tabTraj [ i ] = t.tabTraj [ i ];
+	}	
+} //----- Fin de TrajetCompose
+
 TrajetCompose::~TrajetCompose()
-// Algorithme :
-//
 {
 #ifdef MAP
 	cout << "Appel au destructeur de <TrajetCompose>" << endl;
@@ -102,9 +107,4 @@ TrajetCompose::~TrajetCompose()
 	delete tabTraj;
 
 } //----- Fin de ~TrajetCompose
-
-
-//------------------------------------------------------------------ PRIVE
-
-//----------------------------------------------------- Méthodes protégées
 

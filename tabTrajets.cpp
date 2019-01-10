@@ -161,7 +161,7 @@ tabTrajets::tabTrajets(int nbTraj) : nbMax(nbTraj + (5 - nbTraj % 5)), nbAct(0)
 	{
 
 #ifdef MAP
-		cout << "Appel au constructeur de <tabTrajets>" << endl;
+		cout << "Appel au constructeur de copie de <tabTrajets>" << endl;
 #endif
 
 		nbAct = unTabTrajets.getNbAct();

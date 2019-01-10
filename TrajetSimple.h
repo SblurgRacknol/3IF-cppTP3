@@ -44,7 +44,6 @@ class TrajetSimple : public Trajet {
 	virtual int getType();
 	// Retourne 0 si le trajet est un TrajetSimple, 1 si c'est un TrajetCompose
 
-
 	void Lire ( istream & is );
 	void Ecrire ( ostream & os );
 
