@@ -61,58 +61,6 @@ void Catalogue::Affichage() {
 	tab->Affichage();
 }
 
-
-int Catalogue::compterTrajets (string nomFichier)
-{
-	int nbTraj = 0;
-	/*ifstream flux ( nomFichier.c_str(), ios::in );
-	if ( flux )
-	{
-		string ligne;
-		int taille = 0;
-		
-		// Parcours du fichier en comptant les trajets
-		while ( !flux.eof() )
-		{
-			getline ( flux, ligne, SEP );
-			if ( ligne == "0" )
-			{
-				nbTraj++;
-				// Déplacement à la ligne suivante
-				getline ( flux, ligne );
-			}
-			else if ( ligne == "1" )
-			{
-				nbTraj++;
-				getline ( flux, ligne, SEP ); 
-				taille = atoi ( ligne ); // A RAJOUTER : vérification du format
-				
-				// Déplacement à la ligne suivante autant de fois qu'il y a de 
-				// trajets simples dans le trajet composé
-				for ( int i=0 ; i<=taille ; i++ ) 
-				{
-					getline ( flux, ligne );
-				}
-				// QUESTION : est-ce que le curseur est au bon endroit ? </<=  
-				taille = 0;
-			}
-			else
-			{
-				cerr << "Le fichier n'a pas le bon format." << endl;
-			}
-			
-		}
-		
-		flux.close();
-	}
-	else
-	{
-		cerr << "Impossible d'ouvrir le fichier." << endl;
-	}*/
-	return nbTraj;
-}
-
-
 void Catalogue::Sauvegarder (string nomFichier)
 {
 	/*string fichier = "";
@@ -149,7 +97,7 @@ void Catalogue::Charger (string nomFichier)
 		TrajetSimple * baseSimple = new TrajetSimple ("a","b","");
 		tabTrajets  baseTab = tabTrajets ();
 		baseTab.Ajouter (baseSimple);
-		TrajetCompose * baseCompose = new TrajetCompose ( "a","b", &baseTab );//ICI
+		TrajetCompose * baseCompose = new TrajetCompose ( "a","b", &baseTab );
 		
 		while ( !flux.eof() )
 		{
@@ -165,7 +113,7 @@ void Catalogue::Charger (string nomFichier)
 			else
 			{
 				cerr << "Erreur : le fichier n'a pas le bon format" << endl;
-				flux.seekg (0, flux.end ) ; //ICI
+				flux.seekg (0, flux.end ) ;
 				//La condition de fin de while est remplie
 			}
 			ajouts -> getTrajet ( ajouts->getNbAct() )-> Lire(flux);
@@ -188,9 +136,6 @@ void Catalogue::Charger (string nomFichier)
 	}
 		
 }
-
-
-//------------------------------------------------- Surcharge d'opérateurs
 
 //-------------------------------------------- Constructeurs - destructeur
 
@@ -218,9 +163,4 @@ Catalogue::~Catalogue() {
 	delete tab;
 
 } //----- Fin de ~Catalogue
-
-
-//------------------------------------------------------------------ PRIVE
-
-//----------------------------------------------------- Méthodes protégées
 

@@ -34,9 +34,10 @@ void afficherOptions() {
 	cout << " 2. Ajouter un trajet composé au catalogue." << endl;
 	cout << " 3. Afficher le catalogue." << endl;
 	cout << " 4. Rechercher un parcours (simple) dans le catalogue." << endl;
-	cout << " 5. Rechercher un parcours (complexe) dans le catalogue." << endl;
-	cout << " 6. Revoir les options." << endl;
-	cout << " 7. Quitter.\r\n" << endl;
+	cout << " 5. Effectuer une sauvegarde du catalogue." << endl;
+	cout << " 6. Charger de nouveaux trajets dans le catalogue." << endl;
+	cout << " 7. Revoir les options." << endl;
+	cout << " 8. Quitter.\r\n" << endl;
 }
 
 //
@@ -132,9 +133,58 @@ TrajetCompose* saisieTrajetCompose() {
 
 // Fonction main
 
+void Sauvegarde (Catalogue * catalogue)
+{
+	cout << " 1. Choisir le chemin d'accès du fichier de sauvegarde." << endl;
+	cout << " 2. Sauvegarder dans le fichier <Catalogue.txt.>" << endl;
+	string choix ;
+	int selec;
+	do {
+		cout << "Votre choix :" << endl;
+		getline (cin, choix);
+		selec = stoi (choix);
+		
+	} while (selec < 1 || selec > 2);
+	
+	if (selec == 1)
+	{
+		cout << "Entrez le chemin d'accès du fichier." << endl;
+		getline (cin, choix);
+	}
+	else
+	{
+		choix = "Catalogue.txt";
+	}
+	catalogue->Sauvegarder(choix);
+}
+void Chargement (Catalogue * catalogue)
+{
+	cout << " 1. Choisir le chemin d'accès du fichier de chargement." << endl;
+	cout << " 2. Charger depuis le fichier <Catalogue.txt>." << endl;
+	
+	string choix ;
+	int selec;
+	do {
+		cout << "Votre choix :" << endl;
+		getline (cin, choix);
+		selec = stoi (choix);
+		
+	} while (selec < 1 || selec > 2);
+	
+	if (selec == 1)
+	{
+		cout << "Entrez le chemin d'accès du fichier." << endl;
+		getline (cin, choix);
+	}
+	else
+	{
+		choix = "Catalogue.txt";
+	}
+	catalogue->Charger(choix);
+}
+
 int main() {
 
-	cout << "Bienvenue dans ce logiciel de gestion de voyages. \r\n" << endl;
 	afficherOptions();
 
 	// Création du catalogue
@@ -143,21 +193,18 @@ int main() {
 
 	// Variables nécessaires aux choix de l'utilisateur
 
-	char caractere;
-	int choix;
+	string choix;
+	int selec;
 
 	do {
 		do {
-			cout << "Quelle action souhaitez-vous realiser ?" << endl;
-			scanf("%c", &caractere);
-			cout << endl;
-			choix = caractere - 48;
-			viderBuffer();
-		} while (choix < 1 || choix > 7);
+			cout << "Entrez un chiffre entre 1 et 8 :" << endl;
+			getline (cin, choix);
+			selec = stoi (choix);
+			
+		} while (selec < 1 || selec > 8);
 
-		/* switch */
-
-		switch (choix) {
+		switch (selec) {
 			case 1: {
 				TrajetSimple* ts = saisieTrajetSimple();
 				catalogue->Ajouter(ts);
@@ -191,80 +238,23 @@ int main() {
 
 				catalogue->rechercheVoyage(villeDep, villeArr);
 			} break;
+			case 5 : {
+				Sauvegarde (catalogue);
+			} break;
 			case 6 : {
-				afficherOptions();
+				Chargement (catalogue);
 			} break;
 			case 7 : {
+				afficherOptions();
+			} break;
+			case 8 : {
 				cout << "Au revoir !\r\n" << endl;
-
 			} break;
 			default:
 				cout << "Votre saisie n'est pas valide. Veuillez recommencer." << endl;
 			break;
 		}
-	} while (choix != 7);
-
-
-	///// On affiche ces trajets simples.
-
-	//t1.verifier();
-	//t1.afficher();
-
-	//t5.verifier();
-	//t5.afficher();
-
-	///// On crée différents tableau de trajets simples qui serviront pour des trajets complexes.
-
-	//tabTrajet tabT1 = new tabTrajet();
-	//tabT1.ajouter(t2);
-	//tabT1.ajouter(t1);
-
-	//tabTrajet tabT2 = new tabTrajet();
-	//tabT2.ajouter(t3);
-	//tabT2.ajouter(t1);
-
-	///// On crée différents trajets complexes.
-
-	//TrajetComplexe tC1 = new TrajetComplexe(londres, new_york, tabT1);//Fonctionne
-	//TrajetComplexe tC2 = new TrajetComplexe(paris, new_york, tabT1);//Pas la bonne ville de départ
-	//TrajetComplexe tC3 = new TrajetComplexe(londres, atlanta, tabT1);//Pas la bonne ville d'arrivée
-	//TrajetComplexe tC4 = new TrajetComplexe(los_angeles, new_york, tabT2);//Trajet impossible.
-
-	///// On les vérife et on les affiche.
-
-	//tC1.verifier();
-	//tC1.afficher();
-	//tC2.verifier();
-	//tC2.afficher();
-	//tC3.verifier();
-	//tC3.afficher();
-	//tC4.verifier();
-	//tC4.afficher();
-
-	///// On crée des tableaux de trajets contenant des trajets complexes.
-
-	//tabTrajet tabT4 = new tabTrajet();
-	//tabT4.ajouter(tabT1);
-	//tabT4.ajouter(t4);
-
-	//tabTrajet tabT5 = new tabTrajet();
-	//tabT5.ajouter(tabT1);
-	//tabT5.ajouter(t3);
-
-	///// On crée un trajetComplexe avec ce tableau.
-
-	//TrajetComplexe tC5 = new TrajetComplexe(londres, los_angeles, tabT4);//Fonctionne.
-	//tC5.verifier();
-	//tC5.afficher();
-	//TrajetComplexe tC6 = new TrajetComplexe(atlanta, los_angeles, tabT4);//Pas la bonne ville de départ.
-	//tC6.verifier();
-	//tC6.afficher();
-	//TrajetComplexe tC7 = new TrajetComplexe(londres, paris, tabT4);//Pas la bonne ville d'arrivée.
-	//tC7.verifier();
-	//tC7.afficher();
-	//TrajetComplexe tC8 = new TrajetComplexe(londres, atlanta, tabT5);//Trajet impossible.
-	//tC8.verifier();
-	//tC8.afficher();
+	} while (selec!= 8);
 
 	delete catalogue;
 }
