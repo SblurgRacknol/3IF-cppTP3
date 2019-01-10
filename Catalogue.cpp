@@ -25,7 +25,7 @@ using namespace std;
 
 //------------------------------------------------------------- Constantes
 
-final char SEP = '|';
+const char SEP = '|';
 
 //----------------------------------------------------------------- PUBLIC
 
@@ -36,8 +36,8 @@ void Catalogue::rechercheVoyage(char* villeD, char* villeA) {
 	int cpt = 0;
 
 	for (int i = 0; i < tab->getNbAct(); i++) {
-		if (0 == strcmp(villeD, tab->getTrajet(i)->getVilleDepart())) {
-			if (0 == strcmp(villeA, tab->getTrajet(i)->getVilleArrivee())) {
+		if ( villeD == tab->getTrajet(i)->getVilleDepart() ) {
+			if ( villeA == tab->getTrajet(i)->getVilleArrivee() ) {
 				tab->getTrajet(i)->Affichage();
 				cpt++;
 			}
@@ -125,9 +125,9 @@ void Catalogue::Sauvegarder (string nomFichier)
 	ofstream flux ( fichier.c_str(), ios::out | ios::trunc );
 	if ( flux )
 	{
-		for ( int i=0 ; i<tab->nbAct ; i++ )
+		for ( int i=0 ; i<tab->getNbAct() ; i++ )
 		{
-			 tab[i].Ecrire(flux) ; 
+			 tab->getTrajet(i)->Ecrire(flux) ; 
 		}
 	
 	}
@@ -139,7 +139,7 @@ void Catalogue::Sauvegarder (string nomFichier)
 }
 void Catalogue::Charger (string nomFichier)
 {
-	string fichier = "";
+	/*string fichier = "";
 	do 
 	{
 		cout << "Entrer le chemin d'accès du fichier à charger." << endl;
@@ -189,7 +189,7 @@ void Catalogue::Charger (string nomFichier)
 	else
 	{
 		cerr << "Impossible d'ouvrir le fichier." << endl;
-	}
+	}*/
 		
 }
 

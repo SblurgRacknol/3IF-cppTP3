@@ -73,8 +73,14 @@ using namespace std;
 		nbAct++;
 	}
 
-	bool tabTrajets::isCoherent(TrajetSimple *ts) {
-		return !(strcmp(tab[nbAct - 1]->getVilleArrivee(), ts->getVilleDepart()));
+	bool tabTrajets::isCoherent(TrajetSimple *ts) 
+	{
+		bool res = false;
+		if ( tab[nbAct - 1]->getVilleArrivee() == ts->getVilleDepart() )
+		{
+			res = true;
+		}
+		return res;
 	}
 
 	void tabTrajets::Affichage() {

@@ -11,18 +11,16 @@ e-mail               : kupiec.ludivine@gmail.com lucie.clemenceau@insa-lyon.fr
 #if !defined (TrajetCompose_H)
 #define TrajetCompose_H
 
-//--------------------------------------------------- Interfaces utilisées"
+//--------------------------------------------------- Interfaces utilisées
 
 #include "Trajet.h"
 #include "tabTrajets.h"
 #include "TrajetSimple.h"
-#include <string.h>
+#include <string>
+#include <iostream>
+using namespace std;
 
 class tabTrajets;
-
-//------------------------------------------------------------- Constantes
-
-//------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
 // Rôle de la classe <TrajetCompose>
@@ -35,45 +33,36 @@ class TrajetCompose : public Trajet {
 
 	//----------------------------------------------------------------- PUBLIC
 
-public:
+	public:
 
 	//----------------------------------------------------- Méthodes publiques
 
 	virtual void Affichage();
-	// Mode d'emploi :
-	// ...
 
 	int getType();
-	// Mode d'emploi :
-	// A appeler quand on veut différencier un TrajetSimple d'un TrajetCompose
-
+	// Retourne 0 si le trajet est un TrajetSimple, 1 si c'est un TrajetCompose
 	
-	//------------------------------------------------- Surcharge d'opérateurs
+	void Lire ( istream & is );
+	void Ecrire ( ostream & os );
 	
-	friend istream & operator >> ( istream & is, TrajetCompose & t );
-
-	friend ostream & operator << ( ostream & os, const TrajetCompose & t );
 
 	//-------------------------------------------- Constructeurs - destructeur
 
-	TrajetCompose(const char* villeA, const char* villeB, tabTrajets *tab);
+	TrajetCompose ( const string villeA, const string villeB, tabTrajets * tab );
 
-	// Mode d'emploi (constructeur standard) :
-	// Seul constructeur de TrajetCompose.
-	// Contrat :
+	// Constructeur standard
 	// Le tableau de trajets doit avoir été instancié au préalable. 
+	
+	TrajetCompose ( const TrajetCompose & t );
+	// Constructeur de copie
 
 	virtual ~TrajetCompose();
 
-	// Mode d'emploi :
-	// A appeler si on a un pointeur sur Trajet* ou TrajetCompose*.
-	// C'est le cas notamment dans la classe tabTrajets.
+	// Destructeur
 
 	//------------------------------------------------------------------ PRIVE
 
-protected:
-
-	//----------------------------------------------------- Méthodes protégées
+	protected:
 
 	//----------------------------------------------------- Attributs protégés
 
@@ -81,6 +70,5 @@ protected:
 
 };
 
-//-------------------------------- Autres définitions dépendantes de <TrajetCompose>
 
 #endif // TrajetCompose_H
